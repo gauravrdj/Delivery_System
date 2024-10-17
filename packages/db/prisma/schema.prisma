@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User{
+  id Int @id @default(autoincrement())
+  name String?
+  number String @unique
+  password String
+ Bookings Bookings[]
+}
+
+model Driver{
+  id Int @id @default(autoincrement())
+  name String?
+  number String @unique
+  password String
+  vehicle String[]
+  Available Boolean @default(true)
+  Bookings Bookings[]
+  online online[]
+}
+
+//Bookings
+model Bookings{
+  id Int @id @default(autoincrement())
+  booking_status String @default("Open")
+  driver_status String @default("Searching")
+  post_date DateTime
+  userId Int 
+  pickup_location String
+  dropoff_location String
+  user User @relation(fields: [userId], references: [id])
+  driverId Int?
+  driver Driver? @relation(fields: [driverId], references: [id])
+  accepted_date DateTime?
+  pick_up DateTime?
+  drop_off DateTime?
+  amount Int
+  vehicle String
+}
+
+//Socket
+model online{
+  id Int @id @default(autoincrement())
+  driverId Int
+  driver Driver @relation(fields: [driverId], references: [id])
+  socketId String
+}
