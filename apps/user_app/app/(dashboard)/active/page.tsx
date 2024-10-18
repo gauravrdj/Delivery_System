@@ -25,7 +25,7 @@ async function getActiveBooking(id:any){
                 },
                 {
                 driver_status : {
-                    not : "delivered",
+                    not : "Delivered",
                 },
                 },
             ]

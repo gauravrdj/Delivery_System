@@ -12,6 +12,7 @@ export default function Notification() {
   const [socket, setSocket] = useState<any>(undefined);
   const [res, setRes] = useState<any>(undefined);
   const [accept, setAccept] = useState<any>(false);
+  const [online, setOnline] = useState(false)
   // const [from, setFrom] = useState("");
   // const [to, setTo] = useState("");
   // const [vehicle, setVehicle] = useState("bike");
@@ -22,6 +23,16 @@ export default function Notification() {
 
     
   // };
+  useEffect(()=>{
+    if(online){
+    Swal.fire({
+      title : "Status",
+      text: "You are online now to accept bookings!",
+      icon : "success",
+      timer : 3000
+    })
+  }
+  }, [online])
   // useEffect(()=>{
    
   //   // const socket = SocketGenerate().then((response:any)=> response());
@@ -83,12 +94,12 @@ export default function Notification() {
         )
       }   
   return (
-    <div>
+    <div className="mx-auto  mt-16 flex flex-col  align-middle justify-center">
  
  
- <div>
+ {/* <div>
    Notifications goes here
-   </div>
+   </div> */}
    
 
    
@@ -99,6 +110,7 @@ export default function Notification() {
         const res = await OnlineDriver(socket.id);
         console.log(res);
         console.log('driver: ', socket.id);
+        setOnline(true);
 
         socket.on('deliveryRequest', ({userSocket})=>{
             // Swal.fire({
@@ -111,7 +123,8 @@ export default function Notification() {
         });
         
         })
-      }}>Connect with user</Button>
+      }}>Connect with users</Button>
+      <p>Click here so that, we can connect you with users</p>
    </div>
   );
 }

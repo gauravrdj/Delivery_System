@@ -24,7 +24,7 @@ async function getActiveBooking(id:any){
             userId: Number(id),
                 },
                 {
-                driver_status : "delivered"
+                driver_status : "Delivered"
                 },
             ]
         } ,
